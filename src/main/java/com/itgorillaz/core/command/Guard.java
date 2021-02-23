@@ -9,12 +9,12 @@ import javax.validation.Validator;
 
 public class Guard {
 
-	private static Validator validator = Validation
-		.buildDefaultValidatorFactory()
-		.getValidator();
-	
-	public static <T> Optional<Set<ConstraintViolation<T>>> constraints(T target) {
-		return Optional.ofNullable(validator.validate(target));
-	}
-	
+    private static Validator validator = Validation
+        .buildDefaultValidatorFactory()
+        .getValidator();
+    
+    public static <T> Optional<Set<ConstraintViolation<T>>> constraints(T target) {
+        return Optional.ofNullable(validator.validate(target));
+    }
+    
 }

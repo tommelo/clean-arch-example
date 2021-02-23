@@ -6,6 +6,6 @@ import com.itgorillaz.core.model.ApplicationClient;
 
 public interface AuthService {
 
-	Optional<ApplicationClient> findApplicationClientById(String id);
-	
+    Optional<ApplicationClient> findApplicationClientById(String id);
+    
 }

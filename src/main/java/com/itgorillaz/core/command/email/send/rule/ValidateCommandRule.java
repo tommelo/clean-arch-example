@@ -13,12 +13,12 @@ import com.itgorillaz.core.model.EmailRequestStatusCode;
 
 public class ValidateCommandRule implements Rule<SendEmailCommand, SendEmailContext> {
 
-	@Override
-	public void execute(SendEmailCommand command, SendEmailContext context) throws RuleException {
-		Optional<Set<ConstraintViolation<Object>>> optional = command.validate();
-		if (optional.isPresent()) {
-			throw new RuleException(EmailRequestStatusCode.INVALID_PAYLOAD.toString(), optional.get());
-		}
-	}
+    @Override
+    public void execute(SendEmailCommand command, SendEmailContext context) throws RuleException {
+        Optional<Set<ConstraintViolation<Object>>> optional = command.validate();
+        if (optional.isPresent()) {
+            throw new RuleException(EmailRequestStatusCode.INVALID_PAYLOAD.toString(), optional.get());
+        }
+    }
 
 }

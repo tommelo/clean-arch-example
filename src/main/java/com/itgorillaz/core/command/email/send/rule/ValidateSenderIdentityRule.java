@@ -11,18 +11,18 @@ import com.itgorillaz.core.service.EmailService;
 
 public class ValidateSenderIdentityRule implements Rule<SendEmailCommand, SendEmailContext> {
 
-	private EmailService emailService;
-	
-	public ValidateSenderIdentityRule(EmailService emailService) {
-		this.emailService = emailService;
-	}
-	
-	@Override
-	public void execute(SendEmailCommand command, SendEmailContext context) throws RuleException {
-		List<String> identities = this.emailService.listAllSenderIdentities();
-		if (!identities.contains(command.getFrom())) {
-			throw new RuleException(EmailRequestStatusCode.SENDER_IDENTITY_NOT_VERIFIED.toString(), command.getFrom());
-		}
-	}
+    private EmailService emailService;
+    
+    public ValidateSenderIdentityRule(EmailService emailService) {
+        this.emailService = emailService;
+    }
+    
+    @Override
+    public void execute(SendEmailCommand command, SendEmailContext context) throws RuleException {
+        List<String> identities = this.emailService.listAllSenderIdentities();
+        if (!identities.contains(command.getFrom())) {
+            throw new RuleException(EmailRequestStatusCode.SENDER_IDENTITY_NOT_VERIFIED.toString(), command.getFrom());
+        }
+    }
 
 }

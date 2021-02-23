@@ -7,6 +7,6 @@ import javax.validation.ConstraintViolation;
 
 public interface Command {
 
-	Optional<Set<ConstraintViolation<Object>>> validate();
-	
+    Optional<Set<ConstraintViolation<Object>>> validate();
+    
 }

@@ -16,38 +16,38 @@ import com.itgorillaz.core.service.SmtpPingResult;
 
 public class ValidateEmailExistenceRule implements Rule<SendEmailCommand, SendEmailContext> {
 
-	private EmailService emailService;
-	
-	public ValidateEmailExistenceRule(EmailService emailService) {
-		this.emailService = emailService;
-	}
-	
-	@Override
-	public void execute(SendEmailCommand command, SendEmailContext context) throws RuleException {
-		List<String> emailsFailedOnSmtpCheck = new ArrayList<>();
-		
-		List<String> recipients = new ArrayList<>(command.getTo());
-		recipients.addAll(command.getCc());
-		recipients.addAll(command.getBcc());
-		
-		Set<String> emails = new HashSet<>(recipients);
-		
-		if (command.isFailOnSmtpCheck()) {
-			List<SmtpPingResult> results = this.emailService.ping(emails);
-			List<String> failedChecks = results
-				.stream()
-				.filter(r -> !r.isSuccess())
-				.map(r -> r.getEmail())
-				.collect(Collectors.toList());;
-			
-			if (!failedChecks.isEmpty()) {
-				throw new RuleException(EmailRequestStatusCode.FAILED_ON_SMTP_CHECK.toString(), failedChecks);
-			}
-			
-			emailsFailedOnSmtpCheck.addAll(failedChecks);
-		}
-		
-		context.setEmailsFailedOnSmtpCheck(emailsFailedOnSmtpCheck);
-	}
+    private EmailService emailService;
+    
+    public ValidateEmailExistenceRule(EmailService emailService) {
+        this.emailService = emailService;
+    }
+    
+    @Override
+    public void execute(SendEmailCommand command, SendEmailContext context) throws RuleException {
+        List<String> emailsFailedOnSmtpCheck = new ArrayList<>();
+        
+        List<String> recipients = new ArrayList<>(command.getTo());
+        recipients.addAll(command.getCc());
+        recipients.addAll(command.getBcc());
+        
+        Set<String> emails = new HashSet<>(recipients);
+        
+        if (command.isFailOnSmtpCheck()) {
+            List<SmtpPingResult> results = this.emailService.ping(emails);
+            List<String> failedChecks = results
+                .stream()
+                .filter(r -> !r.isSuccess())
+                .map(r -> r.getEmail())
+                .collect(Collectors.toList());;
+            
+            if (!failedChecks.isEmpty()) {
+                throw new RuleException(EmailRequestStatusCode.FAILED_ON_SMTP_CHECK.toString(), failedChecks);
+            }
+            
+            emailsFailedOnSmtpCheck.addAll(failedChecks);
+        }
+        
+        context.setEmailsFailedOnSmtpCheck(emailsFailedOnSmtpCheck);
+    }
 
 }

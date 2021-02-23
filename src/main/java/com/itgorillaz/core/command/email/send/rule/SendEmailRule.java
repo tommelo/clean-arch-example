@@ -10,28 +10,28 @@ import com.itgorillaz.core.service.SendEmailGatewayResult;
 
 public class SendEmailRule implements Rule<SendEmailCommand, SendEmailContext> {
 
-	private EmailService emailService;
-	
-	public SendEmailRule(EmailService emailService) {
-		this.emailService = emailService;
-	}
-	
-	@Override
-	public void execute(SendEmailCommand command, SendEmailContext context) throws RuleException {
-		Email email = new Email();
-		email.setFrom(command.getFrom());
-		email.setSender(command.getFrom());
-		email.setReplyTo(command.getReplyTo());
-		email.setTo(context.getTo());
-		email.setCc(context.getCc());
-		email.setBcc(context.getBcc());
-		email.setSubject(command.getSubject());
-		email.setHtml(command.getHtml());
-		email.setAttachments(context.getAttachments());
-		
-		SendEmailGatewayResult result = emailService.sendEmail(email);
-		
-		context.setEmailGatewayMessageId(result.getMessageId());
-	}
+    private EmailService emailService;
+    
+    public SendEmailRule(EmailService emailService) {
+        this.emailService = emailService;
+    }
+    
+    @Override
+    public void execute(SendEmailCommand command, SendEmailContext context) throws RuleException {
+        Email email = new Email();
+        email.setFrom(command.getFrom());
+        email.setSender(command.getFrom());
+        email.setReplyTo(command.getReplyTo());
+        email.setTo(context.getTo());
+        email.setCc(context.getCc());
+        email.setBcc(context.getBcc());
+        email.setSubject(command.getSubject());
+        email.setHtml(command.getHtml());
+        email.setAttachments(context.getAttachments());
+        
+        SendEmailGatewayResult result = emailService.sendEmail(email);
+        
+        context.setEmailGatewayMessageId(result.getMessageId());
+    }
 
 }
